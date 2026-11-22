@@ -59,8 +59,8 @@ const SUGGESTIONS: Array<{ text: string; tag?: Tag }> = [
   { text: "Flights from SFO to JFK on Friday", tag: "template" },
 ];
 
-/** Each model's maker, as its logo (public/brand/models, LobeHub icons). One-colour marks follow the text colour. */
-const MODEL_LOGO: Record<ModelId, { file: string; color: boolean }> = {
+/** Each model's maker, as its logo (public/brand/models, LobeHub icons). One-colour marks follow the text colour. Models without a mark (the local gateway) render no logo. */
+const MODEL_LOGO: Partial<Record<ModelId, { file: string; color: boolean }>> = {
   gemini: { file: "gemini-color", color: true },
   gemma: { file: "gemma-color", color: true },
   gpt: { file: "openai", color: false },

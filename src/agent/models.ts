@@ -14,9 +14,14 @@
  *   OPENAI_API_KEY            GPT
  */
 import OpenAI from "openai";
-import { liveRunsOff } from "@/lib/limits";
+import { GATEWAY_MAX_TOKENS, liveRunsOff } from "@/lib/limits";
 import { MODEL_OPTIONS, modelLabel } from "@/lib/model-options";
 import type { ModelId } from "@/lib/model-options";
+import {
+  gatewayClient,
+  gatewayLastKnown,
+  gatewayModelName,
+} from "./gateway";
 
 export type { ModelId };
 
@@ -131,6 +136,24 @@ export const MODELS: Record<ModelId, ModelSpec> = {
         : "There is no OpenAI key on this server.",
     setup: "Set OPENAI_API_KEY.",
     note: () => "OpenAI",
+  },
+  gateway: {
+    id: "gateway",
+    label: modelLabel("gateway"),
+    router: gatewayModelName(),
+    composer: gatewayModelName(),
+    extra: {},
+    parallelToolCalls: false,
+    maxTokens: (tokens) => ({ max_tokens: Math.min(tokens, GATEWAY_MAX_TOKENS) }),
+    client: () => gatewayClient(),
+    // The picker stays optimistic until a probe fails; a run that finds no
+    // gateway fails with the same words instead of crashing.
+    missing: () =>
+      gatewayLastKnown() === false
+        ? "The local gateway isn't answering on this server."
+        : undefined,
+    setup: "Start the local h2a gateway, then retry.",
+    note: () => "local h2a gateway",
   },
 };
 

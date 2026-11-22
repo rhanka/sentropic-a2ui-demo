@@ -72,6 +72,13 @@ export const MAX_CATALOG_PROMPT_CHARS = 80_000;
 export const ROUTER_MAX_TOKENS = 4096;
 export const COMPOSER_MAX_TOKENS = 16384;
 
+/**
+ * Local h2a gateway demo guards. The demo spends the owner's seat, so the
+ * gateway model caps every call low and allows about this many runs a minute.
+ */
+export const GATEWAY_MAX_TOKENS = 2000;
+export const GATEWAY_RUNS_PER_MINUTE = 6;
+
 /* ───────────────────────── rate limiting ───────────────────────── */
 
 /**

@@ -31,6 +31,7 @@ import { EventQueue, EventType, pipeline, uid } from "./events";
 import { SurfaceStream } from "./surface";
 import type { SurfaceRecord } from "./surface";
 import { blueprintOf, TEMPLATE_TREES } from "./surfaces/templates";
+import { GatewayUnreachable } from "./gateway";
 import { modelOf } from "./models";
 import { DATA_TOOLS, FIXED_TOOLS } from "./tools";
 import type { ToolSpec } from "./tools";
@@ -615,6 +616,11 @@ async function run(input: RunAgentInput, signal: AbortSignal, q: EventQueue) {
       });
     } catch (err) {
       if (signal.aborted) throw err;
+      if (err instanceof GatewayUnreachable) {
+        console.warn(`[playground] ${model.label} composer failed: no gateway.`);
+        fail(q, t0, err.message);
+        return;
+      }
       const message = err instanceof Error ? err.message : String(err);
       q.push({
         type: EventType.TOOL_CALL_RESULT,
@@ -687,6 +693,12 @@ export function createPlaygroundAgent() {
       run(input, abortSignal, q)
         .catch((err) => {
           if (abortSignal.aborted) return;
+          // No gateway, no crash: the chat shows the reason with a Retry button.
+          if (err instanceof GatewayUnreachable) {
+            console.warn(`[playground] gateway run failed: no gateway.`);
+            fail(q, t0, err.message);
+            return;
+          }
           const { label } = modelOf(
             (input.forwardedProps as { model?: string } | undefined)?.model,
           );

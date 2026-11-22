@@ -2,7 +2,7 @@
  * The models and formats the playground offers. The server's `src/agent/models.ts` holds how each one is
  * reached, and `GET /api/models` says which can run here (the notes below show until it answers).
  */
-export type ModelId = "gemini" | "gemma" | "gpt";
+export type ModelId = "gemini" | "gemma" | "gpt" | "gateway";
 export type Format = "express" | "json";
 
 export const MODEL_OPTIONS: Array<{
@@ -13,6 +13,7 @@ export const MODEL_OPTIONS: Array<{
   { id: "gemini", label: "Gemini Flash", note: "Google, default" },
   { id: "gemma", label: "Gemma 4", note: "Google, open model" },
   { id: "gpt", label: "GPT-5.5", note: "OpenAI" },
+  { id: "gateway", label: "Gateway", note: "local h2a gateway" },
 ];
 
 export const FORMAT_OPTIONS: Array<{
