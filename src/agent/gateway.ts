@@ -1,15 +1,17 @@
 /**
- * The local h2a gateway in OpenAI mode, for the demo's live runs. Server only.
+ * The local llm-gateway / llm-mesh (or h2a gateway) in OpenAI mode, for the
+ * demo's live runs. Server only.
  *
- * The gateway speaks the OpenAI wire (`POST /v1/chat/completions`, `GET
- * /v1/models`) but mints no static key: the server mints its own session at
- * startup over loopback (`POST <base>/session` with a fresh session id) and
- * sends the returned token as `Authorization: Bearer`. The token lives in
- * module memory only: it is never logged and never written to disk.
+ * Speaks the OpenAI wire (`POST /v1/chat/completions`, `GET /v1/models`).
+ * By default it authenticates directly to `@sentropic/llm-gateway` with a
+ * non-secret loopback bearer (or `DEMO_GATEWAY_API_KEY` from env if set).
+ * Setting `DEMO_GATEWAY_AUTH=session` (or `DEMO_GATEWAY_SESSION=1`) keeps the
+ * h2a session-minting flow (`POST <base>/session`, token held in memory only).
  *
  * Configuration names (no secret values anywhere):
  *   DEMO_GATEWAY_URL   base URL, default http://127.0.0.1:3002/v1
  *   DEMO_MODEL         catalog model id, default gemini-3.8-flash
+ *   DEMO_GATEWAY_AUTH  "bearer" (default, llm-gateway) | "session" (h2a /v1/session)
  *
  * When the gateway does not answer, every failure is a GatewayUnreachable
  * with visitor-safe words: the agent shows them instead of crashing, and the
@@ -121,21 +123,46 @@ async function gatewayFetch(
   return first;
 }
 
-/** An OpenAI client pointed at the local gateway, auth from memory only. */
+const useSessionAuth = () =>
+  process.env.DEMO_GATEWAY_AUTH?.trim().toLowerCase() === "session" ||
+  process.env.DEMO_GATEWAY_SESSION === "1";
+
+async function directGatewayFetch(
+  input: string | URL | Request,
+  init?: RequestInit,
+): Promise<Response> {
+  try {
+    return await fetch(input, init);
+  } catch (err) {
+    if (init?.signal?.aborted) throw err;
+    throw new GatewayUnreachable();
+  }
+}
+
+/** An OpenAI client pointed at the local gateway, auth from env or memory only. */
 export function gatewayClient(): OpenAI {
+  const base = gatewayBaseURL();
+  if (!isLoopback(base)) throw new GatewayUnreachable();
+  if (useSessionAuth()) {
+    return new OpenAI({
+      baseURL: base,
+      apiKey: "h2a-session",
+      fetch: gatewayFetch,
+    });
+  }
   return new OpenAI({
-    baseURL: gatewayBaseURL(),
-    apiKey: "h2a-session",
-    fetch: gatewayFetch,
+    baseURL: base,
+    apiKey: process.env.DEMO_GATEWAY_API_KEY?.trim() || "llm-mesh-local",
+    fetch: directGatewayFetch,
   });
 }
 
 /* ───────────────────────── reachability probe ───────────────────────── */
 
 /**
- * Whether the gateway answered recently. Any HTTP answer counts (even a 401:
- * the models endpoint needs the session token, so a refusal still proves the
- * gateway is up). Cached briefly so the model picker never waits on it twice.
+ * Whether the gateway answered recently. Any non-5xx HTTP answer counts (in
+ * session mode, /models returns 401 without a session token, which still proves
+ * the gateway is up). Cached briefly so the model picker never waits on it twice.
  */
 let probe: { ok: boolean; at: number } | undefined;
 const PROBE_TTL_MS = 30_000;
@@ -144,11 +171,16 @@ export async function probeGateway(): Promise<boolean> {
   if (probe && Date.now() - probe.at < PROBE_TTL_MS) return probe.ok;
   let ok = false;
   try {
+    const headers: Record<string, string> = {};
+    if (!useSessionAuth()) {
+      headers.authorization = `Bearer ${process.env.DEMO_GATEWAY_API_KEY?.trim() || "llm-mesh-local"}`;
+    }
     const res = await fetch(`${trim(gatewayBaseURL())}/models`, {
+      headers,
       signal: AbortSignal.timeout(2000),
     });
     await res.arrayBuffer().catch(() => undefined);
-    ok = true;
+    ok = res.status < 500;
   } catch {
     ok = false;
   }

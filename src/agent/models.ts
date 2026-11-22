@@ -140,8 +140,12 @@ export const MODELS: Record<ModelId, ModelSpec> = {
   gateway: {
     id: "gateway",
     label: modelLabel("gateway"),
-    router: gatewayModelName(),
-    composer: gatewayModelName(),
+    get router() {
+      return gatewayModelName();
+    },
+    get composer() {
+      return gatewayModelName();
+    },
     extra: {},
     parallelToolCalls: false,
     maxTokens: (tokens) => ({ max_tokens: Math.min(tokens, GATEWAY_MAX_TOKENS) }),
@@ -152,8 +156,8 @@ export const MODELS: Record<ModelId, ModelSpec> = {
       gatewayLastKnown() === false
         ? "The local gateway isn't answering on this server."
         : undefined,
-    setup: "Start the local h2a gateway, then retry.",
-    note: () => "local h2a gateway",
+    setup: "Start the local llm-mesh gateway, then retry.",
+    note: () => "local llm-mesh gateway",
   },
 };
 

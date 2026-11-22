@@ -13,7 +13,7 @@ export const MODEL_OPTIONS: Array<{
   { id: "gemini", label: "Gemini Flash", note: "Google, default" },
   { id: "gemma", label: "Gemma 4", note: "Google, open model" },
   { id: "gpt", label: "GPT-5.5", note: "OpenAI" },
-  { id: "gateway", label: "Gateway", note: "local h2a gateway" },
+  { id: "gateway", label: "Gateway", note: "local llm-mesh gateway" },
 ];
 
 export const FORMAT_OPTIONS: Array<{
