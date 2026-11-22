@@ -23825,6 +23825,336 @@
     "ingredients",
     "steps"
    ]
+  },
+  "ProcessDiagram": {
+   "type": "object",
+   "description": "Auto-routed BPMN, flowchart, or ERD canvas. Emit graph topology only; never emit x/y coordinates.",
+   "properties": {
+    "component": {
+     "const": "ProcessDiagram"
+    },
+    "title": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "$ref": "common_types.json#/$defs/DataBinding"
+      },
+      {
+       "$ref": "common_types.json#/$defs/FunctionCall"
+      }
+     ]
+    },
+    "notation": {
+     "anyOf": [
+      {
+       "type": "string",
+       "enum": [
+        "bpmn",
+        "flowchart",
+        "erd"
+       ],
+       "default": "bpmn"
+      },
+      {
+       "$ref": "common_types.json#/$defs/DataBinding"
+      },
+      {
+       "$ref": "common_types.json#/$defs/FunctionCall"
+      }
+     ]
+    },
+    "lanes": {
+     "anyOf": [
+      {
+       "type": "array",
+       "items": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "id": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "label": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           }
+          },
+          "required": [
+           "id",
+           "label"
+          ],
+          "additionalProperties": false
+         },
+         {
+          "$ref": "common_types.json#/$defs/DataBinding"
+         },
+         {
+          "$ref": "common_types.json#/$defs/FunctionCall"
+         }
+        ]
+       }
+      },
+      {
+       "$ref": "common_types.json#/$defs/DataBinding"
+      },
+      {
+       "$ref": "common_types.json#/$defs/FunctionCall"
+      }
+     ]
+    },
+    "nodes": {
+     "anyOf": [
+      {
+       "type": "array",
+       "items": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "id": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "kind": {
+            "anyOf": [
+             {
+              "type": "string",
+              "enum": [
+               "start",
+               "end",
+               "userTask",
+               "serviceTask",
+               "exclusiveGateway",
+               "parallelGateway",
+               "subProcess",
+               "entity"
+              ]
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "label": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "laneId": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "status": {
+            "anyOf": [
+             {
+              "type": "string",
+              "enum": [
+               "default",
+               "active",
+               "bottleneck",
+               "added"
+              ]
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           }
+          },
+          "required": [
+           "id",
+           "kind",
+           "label"
+          ],
+          "additionalProperties": false
+         },
+         {
+          "$ref": "common_types.json#/$defs/DataBinding"
+         },
+         {
+          "$ref": "common_types.json#/$defs/FunctionCall"
+         }
+        ]
+       }
+      },
+      {
+       "$ref": "common_types.json#/$defs/DataBinding"
+      },
+      {
+       "$ref": "common_types.json#/$defs/FunctionCall"
+      }
+     ]
+    },
+    "edges": {
+     "anyOf": [
+      {
+       "type": "array",
+       "items": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "id": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "from": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "to": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "label": {
+            "anyOf": [
+             {
+              "type": "string"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           },
+           "kind": {
+            "anyOf": [
+             {
+              "type": "string",
+              "enum": [
+               "sequence",
+               "message",
+               "association"
+              ],
+              "default": "sequence"
+             },
+             {
+              "$ref": "common_types.json#/$defs/DataBinding"
+             },
+             {
+              "$ref": "common_types.json#/$defs/FunctionCall"
+             }
+            ]
+           }
+          },
+          "required": [
+           "id",
+           "from",
+           "to"
+          ],
+          "additionalProperties": false
+         },
+         {
+          "$ref": "common_types.json#/$defs/DataBinding"
+         },
+         {
+          "$ref": "common_types.json#/$defs/FunctionCall"
+         }
+        ]
+       }
+      },
+      {
+       "$ref": "common_types.json#/$defs/DataBinding"
+      },
+      {
+       "$ref": "common_types.json#/$defs/FunctionCall"
+      }
+     ]
+    },
+    "onNodeSelect": {
+     "$ref": "common_types.json#/$defs/Action",
+     "description": "Fires when a node is clicked, with the A2UI node id."
+    }
+   },
+   "required": [
+    "component",
+    "title",
+    "nodes",
+    "edges"
+   ]
   }
  },
  "functions": {
@@ -24754,6 +25084,9 @@
     },
     {
      "$ref": "#/components/RecipeCard"
+    },
+    {
+     "$ref": "#/components/ProcessDiagram"
     }
    ],
    "discriminator": {

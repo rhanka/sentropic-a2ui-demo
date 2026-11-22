@@ -402,6 +402,10 @@ Use these exact positional signatures to instantiate components. Do not output p
   - wrap: Must be one of: 'nowrap', 'wrap', 'wrap-reverse'
   - gap: 4px steps when a number
   - insetBorder: A 1px border inside the box
+• ProcessDiagram(title, notation?, lanes?, nodes, edges, onNodeSelect? (static))
+  - Description: Auto-routed BPMN, flowchart, or ERD canvas. Emit graph topology only; never emit x/y coordinates.
+  - notation: Must be one of: 'bpmn', 'flowchart', 'erd'
+  - onNodeSelect: Fires when a node is clicked, with the A2UI node id.
 • ProductCard(name, price, compareAt?, image?, rating?, reviews?, badge?, specs?, actionLabel?, onAction? (static))
   - Description: Product tile: name, price (and compare-at), rating, short specs, badge, buy button. One per item when comparing products. price and compareAt are display text like "$399"; specs is a list of short strings. Macro: expands into standard components.
   - onAction: Fires when the buy button is clicked.

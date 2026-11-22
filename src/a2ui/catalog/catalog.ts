@@ -41,6 +41,7 @@ import { feedbackRenderers } from "./renderers/feedback";
 import { inputRenderers } from "./renderers/inputs";
 import { layoutRenderers } from "./renderers/layout";
 import { mapRenderers } from "./renderers/maps";
+import { processRenderers } from "./renderers/process";
 import type { Renderer } from "./renderers/types";
 
 export const renderers: { [K in ComponentName]: Renderer<K> } = {
@@ -52,6 +53,7 @@ export const renderers: { [K in ComponentName]: Renderer<K> } = {
   ...inputRenderers,
   ...feedbackRenderers,
   ...domainRenderers,
+  ...processRenderers,
 };
 
 /** Internal stand-in: `{ component: "Blueprint", of: "Stat", h?: 96 }`. */

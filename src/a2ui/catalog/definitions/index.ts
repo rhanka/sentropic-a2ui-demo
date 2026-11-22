@@ -6,6 +6,7 @@ import { feedbackDefinitions } from "./feedback";
 import { inputDefinitions } from "./inputs";
 import { layoutDefinitions } from "./layout";
 import { mapDefinitions } from "./maps";
+import { processDefinitions } from "./process";
 
 export const definitions = {
   ...layoutDefinitions,
@@ -16,6 +17,7 @@ export const definitions = {
   ...inputDefinitions,
   ...feedbackDefinitions,
   ...domainDefinitions,
+  ...processDefinitions,
 };
 
 export type Definitions = typeof definitions;
