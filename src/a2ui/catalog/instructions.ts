@@ -14,6 +14,7 @@ export const DESIGN_RULES = [
   'Percent values are 0-100 (12.4 means 12.4%) with format "percent"; never fractions.',
   'Subtitles describe the content ("Revenue grew 12% on EMEA renewals"), never the UI itself.',
   "Maps: at most 8 markers, each a specific named place (landmark, venue, neighbourhood) that the plan text mentions, one per stop. Never use the city itself as a marker.",
+  "Diagrams (ProcessDiagram): emit graph topology only (title, notation, lanes, nodes, edges) — never x/y coordinates and never BPMN XML. Keep the graph in the A2UI data model (/process/nodes, /process/edges) through {\"@path\"} bindings instead of inline literals when a surface is updated in place. Every node and edge id is a UAX #31 identifier: ASCII letters and digits, starting with a letter, no hyphens.",
   "Stat values are short numbers; put qualitative takeaways in KeyValueList, Callout or Markdown.",
   'Write final copy. Never say "placeholder", "sample text" or "lorem". Never use em dashes.',
 ];

@@ -31,7 +31,7 @@ import { EventQueue, EventType, pipeline, uid } from "./events";
 import { SurfaceStream } from "./surface";
 import type { SurfaceRecord } from "./surface";
 import { blueprintOf, TEMPLATE_TREES } from "./surfaces/templates";
-import { GatewayUnreachable } from "./gateway";
+import { GatewayUnreachable, takeGatewaySlot } from "./gateway";
 import { modelOf } from "./models";
 import { DATA_TOOLS, FIXED_TOOLS } from "./tools";
 import type { ToolSpec } from "./tools";
@@ -269,6 +269,18 @@ async function run(input: RunAgentInput, signal: AbortSignal, q: EventQueue) {
       missing,
     );
     return;
+  }
+  // Demo guard: the gateway spends the owner's seat, about 6 runs a minute.
+  if (model.id === "gateway") {
+    const slot = takeGatewaySlot();
+    if (!slot.ok) {
+      fail(
+        q,
+        t0,
+        `The local demo allows about 6 gateway runs per minute. Try again in under a minute, or pick another model.`,
+      );
+      return;
+    }
   }
   const client = model.client();
   const messages = clampHistory(input.messages);
