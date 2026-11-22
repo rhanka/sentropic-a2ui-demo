@@ -8,6 +8,7 @@ import { feedbackSamples } from "./feedback";
 import { inputsSamples } from "./inputs";
 import { layoutSamples } from "./layout";
 import { mapsSamples } from "./maps";
+import { processSamples } from "./process";
 import { standardSamples } from "./standard";
 import type { Sample } from "./types";
 
@@ -17,6 +18,7 @@ export const samples: Partial<Record<ComponentName, Sample>> = {
   ...dataSamples,
   ...chartsSamples,
   ...mapsSamples,
+  ...processSamples,
   ...inputsSamples,
   ...feedbackSamples,
   ...domainSamples,

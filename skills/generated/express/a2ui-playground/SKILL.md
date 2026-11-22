@@ -685,3 +685,11 @@ root = Column([head, w], _, _, _, _, 3)
 head = Heading("Lisbon this week", "Live weather")
 w = WeatherReport("Lisbon")
 </a2ui>
+
+<a2ui>
+surface("procurement-bpmn")
+root = Column([head, diagram, note], _, _, _, _, 3)
+head = Heading("Procurement approval", "SOP to BPMN", "Three lanes, one exclusive gateway; no coordinates, the canvas routes it")
+diagram = ProcessDiagram("Procurement approval", "bpmn", [{id: "lanerequester", label: "Requester"}, {id: "lanemanager", label: "Manager"}, {id: "lanefinance", label: "Finance"}], [{id: "nstart", kind: "start", label: "Need identified", laneId: "lanerequester"}, {id: "nsubmit", kind: "userTask", label: "Submit request", laneId: "lanerequester"}, {id: "nreview", kind: "userTask", label: "Review request", laneId: "lanemanager"}, {id: "ngate", kind: "exclusiveGateway", label: "Amount over $25k?", laneId: "lanemanager"}, {id: "napprove", kind: "userTask", label: "Approve purchase", laneId: "lanemanager"}, {id: "npay", kind: "serviceTask", label: "Pay invoice", laneId: "lanefinance"}, {id: "ndone", kind: "end", label: "Closed", laneId: "lanefinance"}], [{id: "e1", from: "nstart", to: "nsubmit", kind: "sequence"}, {id: "e2", from: "nsubmit", to: "nreview", kind: "sequence"}, {id: "e3", from: "nreview", to: "ngate", kind: "sequence"}, {id: "e4", from: "ngate", to: "napprove", label: "yes", kind: "sequence"}, {id: "e5", from: "ngate", to: "npay", label: "no", kind: "sequence"}, {id: "e6", from: "napprove", to: "npay", kind: "sequence"}, {id: "e7", from: "npay", to: "ndone", kind: "sequence"}])
+note = Caption("Rendered by the Sentropic diagram surface")
+</a2ui>
