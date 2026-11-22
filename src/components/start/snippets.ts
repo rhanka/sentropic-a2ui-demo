@@ -197,6 +197,58 @@ export const ui = createGenerativeUI({
   components: {},
 });`;
 
+/** app/genui.tsx for Sentropic: the standard catalog with its Button, Badge and Divider drawn by Sentropic. */
+export const GENUI_SENTROPIC = `"use client";
+import type { MouseEvent } from "react";
+import {
+  createGenerativeUI,
+  standardUI,
+  useGenerativeUIAccessibility,
+} from "@copilotkit/react-core/v2/generative-ui";
+import {
+  Badge,
+  Button,
+  Divider,
+  ThemeProvider,
+} from "@sentropic/design-system-react";
+import "@sentropic/design-system-react/styles.css";
+
+// Each wrapper takes the props of the standard component it replaces.
+type Props = Record<string, any>;
+
+${STANDARD_BUTTON}
+
+function SentropicButton(p: Props) {
+  const a11y = useGenerativeUIAccessibility();
+  const b = useStandardButton(p);
+  const solid = p.variant === "primary" || p.variant === "solid";
+  return (
+    <ThemeProvider>
+      <Button
+        {...a11y}
+        aria-label={a11y["aria-label"] ?? b.name}
+        type={p.submit ? "submit" : "button"}
+        disabled={b.disabled}
+        variant={p.color === "danger" ? "danger" : solid ? "primary" : "secondary"}
+        onClick={b.onClick}
+      >
+        {b.label}
+      </Button>
+    </ThemeProvider>
+  );
+}
+
+export const ui = createGenerativeUI({
+  id: "my-app/genui@1",
+  extends: [standardUI],
+  overrides: {
+    Button: { component: SentropicButton },
+    Badge: { component: (p: Props) => <ThemeProvider><Badge>{p.label}</Badge></ThemeProvider> },
+    Divider: { component: () => <ThemeProvider><Divider /></ThemeProvider> },
+  },
+  components: {},
+});`;
+
 export const ROUTE = `import {
   BuiltInAgent,
   CopilotRuntime,

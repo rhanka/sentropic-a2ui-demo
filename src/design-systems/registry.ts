@@ -3,7 +3,12 @@
  * the catalog (component names and props) is the contract, and a design system is one implementation of it.
  * Switching repaints every surface on the page without asking the model again.
  */
-export type DesignSystemId = "copilotkit" | "shadcn" | "material" | "byoc";
+export type DesignSystemId =
+  | "copilotkit"
+  | "shadcn"
+  | "material"
+  | "byoc"
+  | "sentropic";
 
 export const DESIGN_SYSTEMS: Array<{
   id: DesignSystemId;
@@ -36,6 +41,12 @@ export const DESIGN_SYSTEMS: Array<{
     label: "Bring your own",
     note: "Your components",
     hint: "A hand-written in-house component set mapped onto the same catalog: your look, the same A2UI.",
+  },
+  {
+    id: "sentropic",
+    label: "Sentropic",
+    note: "Sent Tech theme",
+    hint: "The same catalog drawn with Sentropic components in the Sent Tech theme.",
   },
 ];
 

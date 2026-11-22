@@ -7,6 +7,7 @@
  */
 import type { ComponentType } from "react";
 import { byocOwn, byocStandard } from "./byoc";
+import { sentropicOwn, sentropicStandard } from "./sentropic";
 import { shadcnOwn, shadcnStandard } from "./shadcn";
 import { useDesignSystem } from "./context";
 import { materialOwn, materialStandard } from "./material";
@@ -33,6 +34,10 @@ const OVERRIDES: Record<DesignSystemId, Overrides> = {
   byoc: {
     standard: byocStandard as Record<string, AnyComponent>,
     own: byocOwn as Record<string, AnyComponent>,
+  },
+  sentropic: {
+    standard: sentropicStandard as Record<string, AnyComponent>,
+    own: sentropicOwn as Record<string, AnyComponent>,
   },
 };
 

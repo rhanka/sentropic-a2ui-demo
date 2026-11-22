@@ -39,6 +39,7 @@ export function readStoredDesignSystem(): DesignSystemId | null {
 /** What a design system loads before it can draw. Material's stylesheet and font are fetched on first pick. */
 const ASSETS: Partial<Record<DesignSystemId, () => Promise<unknown>>> = {
   material: () => import("./material-assets"),
+  sentropic: () => import("./sentropic-assets"),
 };
 
 /**

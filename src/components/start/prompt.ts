@@ -8,6 +8,7 @@ import { DOCS_URL } from "./links";
 import {
   CATALOG,
   GENUI_MATERIAL,
+  GENUI_SENTROPIC,
   GENUI_SHADCN,
   PACKAGES,
   PROVIDER,
@@ -21,6 +22,7 @@ export const GENUI_SNIPPET: Record<DesignSystemId, string | null> = {
   shadcn: GENUI_SHADCN,
   material: GENUI_MATERIAL,
   byoc: CATALOG,
+  sentropic: GENUI_SENTROPIC,
 };
 
 /** The page with the provider: the standard catalog straight from the package, or your app/genui.tsx. */
@@ -35,6 +37,8 @@ export const GENUI_NOTE: Record<DesignSystemId, string> = {
   material:
     "The standard catalog, with its Button and Divider drawn by Material 3 Expressive. Install it first: npm install @language-lit/material3-expressive.",
   byoc: "Give each component a Zod schema and a line on when to use it.",
+  sentropic:
+    "The standard catalog, with its Button, Badge and Divider drawn by Sentropic. Install it first: npm install @sentropic/design-system-react.",
 };
 
 /** Where `createGenerativeUI` and `standardUI` come from (not the `@copilotkit/react-core/v2` root). */
@@ -51,6 +55,9 @@ Each override is a small wrapper around the shadcn component that takes the prop
   material: `This app should use a Material 3 React component library. If it already has one, use it; if not, install \`@language-lit/material3-expressive\` (the Material 3 Expressive components this playground draws with), import its \`styles.css\` once, after the app's global CSS (if it comes first, Tailwind's preflight outranks it and flattens its buttons), load Roboto Flex, and set \`--m3e-ref-typeface-plain\` and \`--m3e-ref-typeface-brand\` to it. ${GENUI_FILE}, then:
 \`export const ui = createGenerativeUI({ id: "<app-name>/genui@1", extends: [standardUI], overrides: { Button: { component: MaterialButton }, Divider: { component: MaterialDivider } }, components: {} });\`
 Each override is a small wrapper around the library's component that takes the props of the standard component it replaces. Map the standard Button's \`variant\` onto Material's emphasis: primary and solid to filled, soft to tonal, borderless and ghost to text, anything else to outlined. ${BUTTON_CONTRACT} Override leaves like these, not containers: Card and the layout components keep their implementation and match Material through \`theme\` (map Material's color roles, such as primary, surface-container and outline-variant, onto the \`--a2ui-*\` variables, with its 12, 16 and 28px corners), so a surface's inputs keep their state.`,
+  sentropic: `This app should use Sentropic (install \`@sentropic/design-system-react\`, import its \`styles.css\` once, and wrap each override in its \`ThemeProvider\`, whose default theme is Sent Tech). ${GENUI_FILE}, then:
+\`export const ui = createGenerativeUI({ id: "<app-name>/genui@1", extends: [standardUI], overrides: { Button: { component: SentropicButton }, Badge: { component: SentropicBadge }, Divider: { component: SentropicDivider } }, components: {} });\`
+Each override is a small wrapper around the Sentropic component that takes the props of the standard component it replaces. Map the standard Button's \`variant\` onto Sentropic's: primary and solid to primary, borderless and ghost to ghost, danger color to danger, anything else to secondary. ${BUTTON_CONTRACT} Override leaves like these, not containers: Card and the layout components keep their implementation and match Sentropic through \`theme\` (map the Sent Tech semantic tokens onto the \`--a2ui-*\` variables), so a surface's inputs keep their state.`,
   byoc: `Find this project's own reusable React components that an agent should be able to compose: stat tiles, tables, charts, forms, domain cards. For each one, write a Zod schema of its props and a one-line description of when to use it. ${GENUI_FILE}, then:
 \`export const ui = createGenerativeUI({ id: "<app-name>/genui@1", extends: [standardUI], components: { StatTile: { component: StatTile, props: statTileProps, description: "One metric with its change." } } });\`
 Keep \`extends: [standardUI]\` so the agent can lay your components out with Column, Row and Grid. Where one of yours replaces a standard component (your Button or Badge), register it under \`overrides\` with the standard name instead of adding it to \`components\`; a name may appear in only one place. ${BUTTON_CONTRACT} Give the standard components your look with \`theme\` (the \`--a2ui-*\` variables).`,
@@ -62,6 +69,7 @@ const DRAWN_WITH: Record<DesignSystemId, string> = {
   shadcn: "drawn with shadcn/ui components",
   material: "drawn with Material 3 components",
   byoc: "built from this app's own components",
+  sentropic: "drawn with Sentropic components",
 };
 
 export function buildPrompt(ds: DesignSystemId, origin: string): string {

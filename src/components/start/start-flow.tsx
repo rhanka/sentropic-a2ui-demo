@@ -34,6 +34,10 @@ const PICKS: Record<
     label: "Your own",
     note: "Components you already have",
   },
+  sentropic: {
+    label: "Sentropic",
+    note: "Sent Tech theme",
+  },
 };
 
 type Mode = "agent" | "manual";

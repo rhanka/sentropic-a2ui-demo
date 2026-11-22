@@ -995,3 +995,177 @@
   height: 100%;
   background: #0b5cff;
 }
+
+/* ───────────────────────── Sentropic (Sent Tech) ─────────────────────────
+   The Sentropic leaves draw themselves (the provider's stylesheet, loaded
+   lazily): this scope only sets the surface font and legacy vars, lays out
+   the thin `.st-ds-*` wrappers, and re-colors them in dark mode. Sentropic's
+   own components re-theme themselves through the provider. */
+.a2-surface-host[data-ds="sentropic"],
+.a2-static[data-ds="sentropic"] {
+  --a2-surface: #ffffff;
+  --a2-surface-2: #f8fafc;
+  --a2-line: #e2e8f0;
+  --a2-line-strong: #94a3b8;
+  --a2-radius: 8px;
+  --a2-accent: oklch(50% 0.134 242.749);
+  --a2-positive: #16a34a;
+  --a2-negative: #dc2626;
+  --a2-warning: #d97706;
+  --a2-info: #2563eb;
+  --color-white: #0f172a;
+  --font-sentropic: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-sans: var(--font-sentropic);
+  --gen-line: #94a3b8;
+  --gen-field: rgb(15 23 42 / 14%);
+  color-scheme: light;
+  color: #0f172a;
+  font-family: var(--font-sentropic);
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] {
+  --a2-surface: oklch(15% 0.012 250);
+  --a2-surface-2: oklch(19% 0.014 250);
+  --a2-line: oklch(28% 0.014 250);
+  --a2-line-strong: oklch(42% 0.016 250);
+  --a2-radius: 8px;
+  --a2-accent: oklch(62% 0.15 242);
+  --a2-positive: oklch(70% 0.17 150);
+  --a2-negative: oklch(64% 0.19 25);
+  --a2-warning: oklch(76% 0.15 75);
+  --a2-info: oklch(68% 0.15 250);
+  --color-white: oklch(96% 0.005 250);
+  --gen-line: oklch(42% 0.016 250);
+  --gen-field: rgb(148 163 184 / 22%);
+  color-scheme: dark;
+  color: oklch(96% 0.005 250);
+}
+:is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .a2-card {
+  border-radius: 8px;
+}
+:is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .a2-chart {
+  color: #475569;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .a2-chart {
+  color: oklch(78% 0.012 250);
+}
+.st-ds-statgroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+.st-ds-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+.st-ds-stat-label {
+  font-size: 13px;
+  color: #475569;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-stat-label {
+  color: oklch(78% 0.012 250);
+}
+.st-ds-stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: #0f172a;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-stat-value {
+  color: oklch(96% 0.005 250);
+}
+.st-ds-note {
+  font-size: 12px;
+  color: #64748b;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-note {
+  color: oklch(66% 0.018 250);
+}
+.st-ds-pairs dl {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: 100%;
+}
+.st-ds-pairs dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.st-ds-pairs dt {
+  color: #475569;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-pairs dt {
+  color: oklch(78% 0.012 250);
+}
+.st-ds-pairs dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-pairs dd {
+  color: oklch(96% 0.005 250);
+}
+.st-ds-pairs small {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #64748b;
+}
+.st-ds-pairs-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-pairs-title {
+  color: oklch(96% 0.005 250);
+}
+.st-ds-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.st-ds-heading h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-heading h2 {
+  color: oklch(96% 0.005 250);
+}
+.st-ds-heading[data-level="1"] h2 {
+  font-size: 24px;
+}
+.st-ds-heading[data-level="3"] h2 {
+  font-size: 16px;
+}
+.st-ds-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: #475569;
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-heading p {
+  color: oklch(78% 0.012 250);
+}
+.st-ds-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: oklch(50% 0.134 242.749);
+}
+.dark :is(.a2-surface-host, .a2-static)[data-ds="sentropic"] .st-ds-eyebrow {
+  color: oklch(72% 0.13 242);
+}
