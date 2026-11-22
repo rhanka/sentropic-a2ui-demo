@@ -50,6 +50,9 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@copilotkit/runtime"],
   devIndicators: false,
   poweredByHeader: false,
+  experimental: {
+    agentUpgrade: "security",
+  },
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
   },
